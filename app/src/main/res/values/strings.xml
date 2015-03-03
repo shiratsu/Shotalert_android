@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Shotalert</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="pref_text">都道府県</string>
+    <string name="startday_text">勤務開始日</string>
+    <string name="minimumday_text">最低勤務日数</string>
+    <string name="mainjob_text">職種</string>
+    <string name="tag_text">タグ</string>
+</resources>
