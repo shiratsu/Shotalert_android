@@ -42,7 +42,7 @@ public class TopAdapter extends ArrayAdapter<HashMap<String,String>> {
         View v = convertView;
         if(v == null){
             //
-            v = inflater.inflate(R.layout.select_item, null);
+            v = inflater.inflate(R.layout.top_item, null);
         }
         //
         //表示系処理

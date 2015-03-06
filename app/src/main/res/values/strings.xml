@@ -10,4 +10,5 @@
     <string name="minimumday_text">最低勤務日数</string>
     <string name="mainjob_text">職種</string>
     <string name="tag_text">タグ</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>

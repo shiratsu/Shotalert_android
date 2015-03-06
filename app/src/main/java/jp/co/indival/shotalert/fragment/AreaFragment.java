@@ -2,7 +2,9 @@ package jp.co.indival.shotalert.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.app.ListFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +14,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import io.realm.Realm;
+import io.realm.RealmResults;
 import jp.co.indival.shotalert.R;
 
+import jp.co.indival.shotalert.adapter.AreaAdapter;
+import jp.co.indival.shotalert.adapter.ItemListAdapter;
+import jp.co.indival.shotalert.adapter.TopAdapter;
 import jp.co.indival.shotalert.fragment.dummy.DummyContent;
+import jp.co.indival.shotalert.model.Area;
 
 /**
  * A fragment representing a list of Items.
@@ -22,28 +34,16 @@ import jp.co.indival.shotalert.fragment.dummy.DummyContent;
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link }
  * interface.
  */
 public class AreaFragment extends ListFragment implements AbsListView.OnItemClickListener {
 
+    private Realm realm;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    /**
-     * The fragment's ListView/GridView.
-     */
-    private AbsListView mListView;
-
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
-    private ListAdapter mAdapter;
+    private AreaAdapter adapter;
+    private RealmResults<Area> items;
+    private AbsListView condView;
 
     // TODO: Rename and change types of parameters
     public static AreaFragment newInstance() {
@@ -62,12 +62,34 @@ public class AreaFragment extends ListFragment implements AbsListView.OnItemClic
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Realm.deleteRealmFile(getActivity());
 
+        realm = Realm.getInstance(getActivity());
 
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, DummyContent.ITEMS);
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        condView = (AbsListView) getActivity().findViewById(android.R.id.list);
+
+        //初期データをセットする
+        _setData();
+
+        //set adapter
+        adapter = new AreaAdapter(getActivity(),items,true);
+        condView.setAdapter(adapter);
+    }
+
+    /**
+     * トップページの初期データをセット
+     */
+    private void _setData() {
+        items = realm.allObjects(Area.class);
+    }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,11 +97,11 @@ public class AreaFragment extends ListFragment implements AbsListView.OnItemClic
         View view = inflater.inflate(R.layout.fragment_area, container, false);
 
         // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+        condView = (AbsListView) view.findViewById(android.R.id.list);
+        ((AdapterView<ListAdapter>) condView).setAdapter(adapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
-        mListView.setOnItemClickListener(this);
+        condView.setOnItemClickListener(this);
 
         return view;
     }
@@ -87,28 +109,19 @@ public class AreaFragment extends ListFragment implements AbsListView.OnItemClic
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
+
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        }
+
     }
 
     /**
@@ -117,26 +130,13 @@ public class AreaFragment extends ListFragment implements AbsListView.OnItemClic
      * to supply the text it should use.
      */
     public void setEmptyText(CharSequence emptyText) {
-        View emptyView = mListView.getEmptyView();
+        View emptyView = condView.getEmptyView();
 
         if (emptyView instanceof TextView) {
             ((TextView) emptyView).setText(emptyText);
         }
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(String id);
-    }
+
 
 }

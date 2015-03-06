@@ -5,6 +5,7 @@ package jp.co.indival.shotalert.common;
  */
 public class AppInfo {
 
+    public static int codeArea;
     public static int codePref;
     public static int codeStartday;
     public static int codeMinimumday;
@@ -16,4 +17,7 @@ public class AppInfo {
     public static String nameMinimumday;
     public static String nameMainjob;
     public static String nameTag;
+
+
+
 }

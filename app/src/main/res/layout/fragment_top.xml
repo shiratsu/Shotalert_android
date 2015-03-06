@@ -3,8 +3,8 @@
     android:layout_height="match_parent"
     tools:context="jp.co.indival.shotalert.fragment.TopFragment">
 
-    <android.widget.AbsListView
-        android:id="@+id/shotlist"
+    <ListView
+        android:id="@id/android:list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:drawSelectorOnTop="false"/>

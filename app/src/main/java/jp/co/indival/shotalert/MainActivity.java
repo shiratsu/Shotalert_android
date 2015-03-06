@@ -15,7 +15,7 @@ import jp.co.indival.shotalert.fragment.AreaFragment;
 import jp.co.indival.shotalert.fragment.TopFragment;
 
 
-public class MainActivity extends ActionBarActivity implements AreaFragment.OnFragmentInteractionListener{
+public class MainActivity extends ActionBarActivity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +51,4 @@ public class MainActivity extends ActionBarActivity implements AreaFragment.OnFr
         return super.onOptionsItemSelected(item);
     }
 
-
-    @Override
-    public void onFragmentInteraction(String id) {
-
-    }
 }
