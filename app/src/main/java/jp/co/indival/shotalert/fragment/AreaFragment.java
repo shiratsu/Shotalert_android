@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -37,13 +39,17 @@ import jp.co.indival.shotalert.model.Area;
  * Activities containing this fragment MUST implement the {@link }
  * interface.
  */
-public class AreaFragment extends ListFragment implements AbsListView.OnItemClickListener {
+public class AreaFragment extends ListFragment {
 
     private Realm realm;
 
     private AreaAdapter adapter;
     private RealmResults<Area> items;
     private AbsListView condView;
+
+    private OnAreaInteractionListner mListener;
+
+    private static final String TAG = "AreaFragment";
 
     // TODO: Rename and change types of parameters
     public static AreaFragment newInstance() {
@@ -74,8 +80,7 @@ public class AreaFragment extends ListFragment implements AbsListView.OnItemClic
 
         condView = (AbsListView) getActivity().findViewById(android.R.id.list);
 
-        //初期データをセットする
-        _setData();
+
 
         //set adapter
         adapter = new AreaAdapter(getActivity(),items,true);
@@ -96,12 +101,14 @@ public class AreaFragment extends ListFragment implements AbsListView.OnItemClic
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_area, container, false);
 
+        //初期データをセットする
+        _setData();
+
         // Set the adapter
         condView = (AbsListView) view.findViewById(android.R.id.list);
-        ((AdapterView<ListAdapter>) condView).setAdapter(adapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
-        condView.setOnItemClickListener(this);
+        condView.setAdapter(adapter);
 
         return view;
     }
@@ -109,19 +116,47 @@ public class AreaFragment extends ListFragment implements AbsListView.OnItemClic
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
+        try {
+            mListener = (OnAreaInteractionListner) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-
+        mListener = null;
     }
 
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Log.d(TAG, "onListItemClick position => " + position + " : id => " + id);
+        if (null != mListener) {
+            // Notify the active callbacks interface (the activity, if the
+            // fragment is attached to one) that an item has been selected.
+            mListener.onAreaItemClick(position);
+        }
+    }
+
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     * <p/>
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
+     */
+    public interface OnAreaInteractionListner {
+        // TODO: Update argument type and name
+        public void onAreaItemClick(int position);
     }
 
     /**

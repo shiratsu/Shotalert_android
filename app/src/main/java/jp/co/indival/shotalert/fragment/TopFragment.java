@@ -36,7 +36,7 @@ import jp.co.indival.shotalert.fragment.dummy.DummyContent;
  * Use the {@link TopFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TopFragment extends ListFragment implements AbsListView.OnItemClickListener {
+public class TopFragment extends ListFragment {
 
 
     private TopAdapter adapter;
@@ -60,7 +60,6 @@ public class TopFragment extends ListFragment implements AbsListView.OnItemClick
     }
 
     public TopFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -167,8 +166,7 @@ public class TopFragment extends ListFragment implements AbsListView.OnItemClick
         adapter = new TopAdapter(getActivity(),R.layout.top_item,items);
         condView.setAdapter(adapter);
 
-        // Set OnItemClickListener so we can be notified on item clicks
-        condView.setOnItemClickListener(this);
+
 
         return view;
 
@@ -192,15 +190,7 @@ public class TopFragment extends ListFragment implements AbsListView.OnItemClick
     }
 
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Log.d(TAG, "onListItemClick position => " + position + " : id => " + id);
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            mListener.onMenuItemClick(position);
-        }
-    }
+
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
