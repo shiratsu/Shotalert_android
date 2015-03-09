@@ -64,7 +64,7 @@ public class AreaFragment extends ListFragment implements AbsListView.OnItemClic
 
         Realm.deleteRealmFile(getActivity());
 
-        realm = Realm.getInstance(getActivity());
+        realm = Realm.getInstance(getActivity(),"shotalert");
 
     }
 

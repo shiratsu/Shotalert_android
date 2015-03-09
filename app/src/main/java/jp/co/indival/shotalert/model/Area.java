@@ -9,52 +9,49 @@ public class Area extends RealmObject {
 
 
     private int id;
-    private int AreaCode;
-    private int PrefCode;
+    private String AreaCode;
+    private String PrefCode;
 
-    private int AreaName;
-    private int PrefName;
-
-
-    public int getAreaCode() {
-        return AreaCode;
-    }
-
-    public int getPrefCode() {
-        return PrefCode;
-    }
-
-    public int getAreaName() {
-        return AreaName;
-    }
-
-    public int getPrefName() {
-        return PrefName;
-    }
+    private String AreaName;
+    private String PrefName;
 
     public int getId() {
-
         return id;
     }
-
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public void setAreaCode(int areaCode) {
+    public String getAreaCode() {
+        return AreaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
         AreaCode = areaCode;
     }
 
-    public void setPrefCode(int prefCode) {
+    public String getPrefCode() {
+        return PrefCode;
+    }
+
+    public void setPrefCode(String prefCode) {
         PrefCode = prefCode;
     }
 
-    public void setAreaName(int areaName) {
+    public String getAreaName() {
+        return AreaName;
+    }
+
+    public void setAreaName(String areaName) {
         AreaName = areaName;
     }
 
-    public void setPrefName(int prefName) {
+    public String getPrefName() {
+        return PrefName;
+    }
+
+    public void setPrefName(String prefName) {
         PrefName = prefName;
     }
 }

@@ -1,15 +1,19 @@
 package jp.co.indival.shotalert.fragment;
 
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,23 +26,26 @@ import jp.co.indival.shotalert.adapter.ItemListAdapter;
 import jp.co.indival.shotalert.adapter.TopAdapter;
 import jp.co.indival.shotalert.common.AppInfo;
 import jp.co.indival.shotalert.common.Util;
+import jp.co.indival.shotalert.fragment.dummy.DummyContent;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link TopFragment.OnFragmentInteractionListener} interface
+ * {@link TopFragment.OnMenuInteractionListener} interface
  * to handle interaction events.
  * Use the {@link TopFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TopFragment extends ListFragment implements AbsListView.OnItemClickListener  {
+public class TopFragment extends ListFragment implements AbsListView.OnItemClickListener {
 
 
     private TopAdapter adapter;
     private List<HashMap<String,String>> items;
     private AbsListView condView;
 
-    final 
+    private static final String TAG = "TopFragment";
+
+    private OnMenuInteractionListener mListener;
 
     /**
      * Use this factory method to create a new instance of
@@ -68,14 +75,6 @@ public class TopFragment extends ListFragment implements AbsListView.OnItemClick
     public void onResume(){
         super.onResume();
 
-        condView = (AbsListView) getActivity().findViewById(android.R.id.list);
-
-        //初期データをセットする
-        _setData();
-
-        //set adapter
-        adapter = new TopAdapter(getActivity(),R.layout.top_item,items);
-        condView.setAdapter(adapter);
     }
 
     /**
@@ -154,30 +153,81 @@ public class TopFragment extends ListFragment implements AbsListView.OnItemClick
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_top, container, false);
+
+
+        View view = inflater.inflate(R.layout.fragment_top, container, false);
+
+        // Set the adapter
+        condView = (AbsListView) view.findViewById(android.R.id.list);
+
+        //初期データをセットする
+        _setData();
+
+        //set adapter
+        adapter = new TopAdapter(getActivity(),R.layout.top_item,items);
+        condView.setAdapter(adapter);
+
+        // Set OnItemClickListener so we can be notified on item clicks
+        condView.setOnItemClickListener(this);
+
+        return view;
+
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnMenuInteractionListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.d(TAG, "onListItemClick position => " + position + " : id => " + id);
+        if (null != mListener) {
+            // Notify the active callbacks interface (the activity, if the
+            // fragment is attached to one) that an item has been selected.
+            mListener.onMenuItemClick(position);
+        }
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        Log.d(TAG, "onListItemClick position => " + position + " : id => " + id);
+        if (null != mListener) {
+            // Notify the active callbacks interface (the activity, if the
+            // fragment is attached to one) that an item has been selected.
+            mListener.onMenuItemClick(position);
+        }
     }
 
 
     /**
-     * Callback method to be invoked when an item in this AdapterView has
-     * been clicked.
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
      * <p/>
-     * Implementers can call getItemAtPosition(position) if they need
-     * to access the data associated with the selected item.
-     *
-     * @param parent   The AdapterView where the click happened.
-     * @param view     The view within the AdapterView that was clicked (this
-     *                 will be a view provided by the adapter)
-     * @param position The position of the view in the adapter.
-     * @param id       The row id of the item that was clicked.
+     * See the Android Training lesson <a href=
+     * "http://developer.android.com/training/basics/fragments/communicating.html"
+     * >Communicating with Other Fragments</a> for more information.
      */
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        switch (position){
-            case 0:
-                break;
-        }
+    public interface OnMenuInteractionListener {
+        // TODO: Update argument type and name
+        public void onMenuItemClick(int position);
     }
+
 
     /**
      * The default content for this Fragment has a TextView that is shown when

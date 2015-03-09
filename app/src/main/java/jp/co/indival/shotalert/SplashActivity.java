@@ -23,12 +23,24 @@ public class SplashActivity extends ActionBarActivity {
 
     Handler mHandler = new Handler();
 
+    public static final String TAG = SplashActivity.class.getName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        String shotalert_path = copyBundledRealmFile(this.getResources().openRawResource(R.raw.shotalert), "default0");
+        String shotalert_path = copyBundledRealmFile(this.getResources().openRawResource(R.raw.shotalert), "shotalert");
+
+
+        // If you try to open a file that doesn't match your model an exception is thrown:
+        try {
+            // should throw as migration is required
+            Realm.getInstance(this, "shotalert");
+        } catch (RealmMigrationNeededException ex) {
+            Log.i(TAG, "Excellent! This is expected.");
+        }
+
 
         // 2秒したらMainActivityを呼び出してSplashActivityを終了する
         mHandler.postDelayed(new Runnable() {
