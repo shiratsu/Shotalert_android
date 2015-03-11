@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import jp.co.indival.shotalert.R;
+import jp.co.indival.shotalert.common.AppInfo;
 
 /**
  * Created by shhirats on 3/3/15.
@@ -52,19 +53,19 @@ public class TopAdapter extends ArrayAdapter<HashMap<String,String>> {
 
 
         switch (position){
-            case LIST_ITEM_PREF:
+            case AppInfo.MODE_PREF:
                 titleText.setText(aContext.getString(R.string.pref_text));
                 break;
-            case LIST_ITEM_START_DAY:
+            case AppInfo.MODE_START_DAY:
                 titleText.setText(aContext.getString(R.string.startday_text));
                 break;
-            case LIST_ITEM_MINIMUM_DAY:
+            case AppInfo.MODE_MINIMUM_DAY:
                 titleText.setText(aContext.getString(R.string.minimumday_text));
                 break;
-            case LIST_ITEM_MAIN_JOB:
+            case AppInfo.MODE_MAIN_JOB:
                 titleText.setText(aContext.getString(R.string.mainjob_text));
                 break;
-            case LIST_ITEM_TAG:
+            case AppInfo.MODE_TAG:
                 titleText.setText(aContext.getString(R.string.tag_text));
                 break;
 

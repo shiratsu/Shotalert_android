@@ -4,16 +4,12 @@ package jp.co.indival.shotalert.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -22,11 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import jp.co.indival.shotalert.R;
-import jp.co.indival.shotalert.adapter.ItemListAdapter;
 import jp.co.indival.shotalert.adapter.TopAdapter;
 import jp.co.indival.shotalert.common.AppInfo;
 import jp.co.indival.shotalert.common.Util;
-import jp.co.indival.shotalert.fragment.dummy.DummyContent;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -82,12 +76,12 @@ public class TopFragment extends ListFragment {
     private void _setData() {
         items = new ArrayList<HashMap<String,String>>();
 
-        AppInfo.codeArea        = Util.getIntPreferences(getActivity(),"codeArea");
-        AppInfo.codePref        = Util.getIntPreferences(getActivity(),"codePref");
-        AppInfo.codeStartday    = Util.getIntPreferences(getActivity(),"codeStartday");
-        AppInfo.codeMinimumday    = Util.getIntPreferences(getActivity(),"codeMinimumday");
-        AppInfo.codeMainjob     = Util.getIntPreferences(getActivity(),"codeMainjob");
-        AppInfo.codeTag         = Util.getIntPreferences(getActivity(),"codeTag");
+        AppInfo.codeArea        = Util.getStrPreferences(getActivity(),"codeArea");
+        AppInfo.codePref        = Util.getStrPreferences(getActivity(),"codePref");
+        AppInfo.codeStartday    = Util.getStrPreferences(getActivity(),"codeStartday");
+        AppInfo.codeMinimumday    = Util.getStrPreferences(getActivity(),"codeMinimumday");
+        AppInfo.codeMainjob     = Util.getStrPreferences(getActivity(),"codeMainjob");
+        AppInfo.codeTag         = Util.getStrPreferences(getActivity(),"codeTag");
 
         AppInfo.namePref        = Util.getStrPreferences(getActivity(),"namePref");
         AppInfo.nameStartday    = Util.getStrPreferences(getActivity(),"nameStartday");

@@ -5,12 +5,13 @@ package jp.co.indival.shotalert.common;
  */
 public class AppInfo {
 
-    public static int codeArea;
-    public static int codePref;
-    public static int codeStartday;
-    public static int codeMinimumday;
-    public static int codeMainjob;
-    public static int codeTag;
+
+    public static String codeArea;
+    public static String codePref;
+    public static String codeStartday;
+    public static String codeMinimumday;
+    public static String codeMainjob;
+    public static String codeTag;
 
     public static String namePref;
     public static String nameStartday;
@@ -19,5 +20,9 @@ public class AppInfo {
     public static String nameTag;
 
 
-
+    public final static int MODE_PREF         = 0;
+    public final static int MODE_START_DAY    = 1;
+    public final static int MODE_MINIMUM_DAY  = 2;
+    public final static int MODE_MAIN_JOB     = 3;
+    public final static int MODE_TAG          = 4;
 }

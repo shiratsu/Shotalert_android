@@ -2,32 +2,20 @@ package jp.co.indival.shotalert.fragment;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 import jp.co.indival.shotalert.R;
 
 import jp.co.indival.shotalert.adapter.AreaAdapter;
-import jp.co.indival.shotalert.adapter.ItemListAdapter;
-import jp.co.indival.shotalert.adapter.TopAdapter;
-import jp.co.indival.shotalert.fragment.dummy.DummyContent;
 import jp.co.indival.shotalert.model.Area;
 
 /**
@@ -74,19 +62,6 @@ public class AreaFragment extends ListFragment {
 
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-
-        condView = (AbsListView) getActivity().findViewById(android.R.id.list);
-
-
-
-        //set adapter
-        adapter = new AreaAdapter(getActivity(),items,true);
-        condView.setAdapter(adapter);
-    }
-
     /**
      * トップページの初期データをセット
      */
@@ -106,6 +81,9 @@ public class AreaFragment extends ListFragment {
 
         // Set the adapter
         condView = (AbsListView) view.findViewById(android.R.id.list);
+        //set adapter
+        adapter = new AreaAdapter(getActivity(),items,true);
+        condView.setAdapter(adapter);
 
         // Set OnItemClickListener so we can be notified on item clicks
         condView.setAdapter(adapter);
@@ -139,7 +117,8 @@ public class AreaFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onAreaItemClick(position);
+            Area area = items.get(position);
+            mListener.onAreaItemClick(area);
         }
     }
 
@@ -156,7 +135,7 @@ public class AreaFragment extends ListFragment {
      */
     public interface OnAreaInteractionListner {
         // TODO: Update argument type and name
-        public void onAreaItemClick(int position);
+        public void onAreaItemClick(Area area);
     }
 
     /**

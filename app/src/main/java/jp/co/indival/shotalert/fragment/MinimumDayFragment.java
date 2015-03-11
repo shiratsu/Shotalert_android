@@ -14,9 +14,10 @@ import io.realm.RealmObject;
 import io.realm.RealmResults;
 import jp.co.indival.shotalert.R;
 
-import jp.co.indival.shotalert.adapter.MainJobAdapter;
+import jp.co.indival.shotalert.adapter.MinimumDayAdapter;
 import jp.co.indival.shotalert.common.AppInfo;
-import jp.co.indival.shotalert.model.MainJob;
+import jp.co.indival.shotalert.model.MinimumDay;
+
 
 /**
  * A fragment representing a list of Items.
@@ -24,15 +25,15 @@ import jp.co.indival.shotalert.model.MainJob;
  * Large screen devices (such as tablets) are supported by replacing the ListView
  * with a GridView.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
+ * Activities containing this fragment MUST implement the {@link }
  * interface.
  */
-public class MainJobFragment extends ListFragment {
+public class MinimumDayFragment extends ListFragment {
 
     private Realm realm;
 
-    private MainJobAdapter adapter;
-    private RealmResults<MainJob> items;
+    private MinimumDayAdapter adapter;
+    private RealmResults<MinimumDay> items;
     private AbsListView condView;
 
     private OnFragmentInteractionListener mListener;
@@ -41,9 +42,11 @@ public class MainJobFragment extends ListFragment {
 
 
 
+
+
     // TODO: Rename and change types of parameters
-    public static MainJobFragment newInstance() {
-        MainJobFragment fragment = new MainJobFragment();
+    public static MinimumDayFragment newInstance() {
+        MinimumDayFragment fragment = new MinimumDayFragment();
         return fragment;
     }
 
@@ -51,7 +54,7 @@ public class MainJobFragment extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public MainJobFragment() {
+    public MinimumDayFragment() {
     }
 
     @Override
@@ -61,19 +64,22 @@ public class MainJobFragment extends ListFragment {
         Realm.deleteRealmFile(getActivity());
 
         realm = Realm.getInstance(getActivity(),"shotalert");
+
     }
 
     /**
      * トップページの初期データをセット
      */
     private void _setData() {
-        items = realm.allObjects(MainJob.class);
+        items = realm.allObjects(MinimumDay.class);
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mainjob, container, false);
+        View view = inflater.inflate(R.layout.fragment_area, container, false);
 
         //初期データをセットする
         _setData();
@@ -81,7 +87,7 @@ public class MainJobFragment extends ListFragment {
         // Set the adapter
         condView = (AbsListView) view.findViewById(android.R.id.list);
         //set adapter
-        adapter = new MainJobAdapter(getActivity(),items,true);
+        adapter = new MinimumDayAdapter(getActivity(),items,true);
         condView.setAdapter(adapter);
 
 
@@ -95,7 +101,7 @@ public class MainJobFragment extends ListFragment {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnStartDayInteractionListner");
         }
     }
 
@@ -111,8 +117,8 @@ public class MainJobFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            MainJob obj = items.get(position);
-            mListener.onFragmentInteraction(obj,"MainJob", AppInfo.MODE_MAIN_JOB);
+            MinimumDay obj = items.get(position);
+            mListener.onFragmentInteraction(obj,"MinimumDay", AppInfo.MODE_MINIMUM_DAY);
         }
     }
 
