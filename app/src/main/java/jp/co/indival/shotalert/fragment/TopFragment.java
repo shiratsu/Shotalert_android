@@ -78,16 +78,16 @@ public class TopFragment extends ListFragment {
 
         AppInfo.codeArea        = Util.getStrPreferences(getActivity(),"codeArea");
         AppInfo.codePref        = Util.getStrPreferences(getActivity(),"codePref");
-        AppInfo.codeStartday    = Util.getStrPreferences(getActivity(),"codeStartday");
-        AppInfo.codeMinimumday    = Util.getStrPreferences(getActivity(),"codeMinimumday");
-        AppInfo.codeMainjob     = Util.getStrPreferences(getActivity(),"codeMainjob");
-        AppInfo.codeTag         = Util.getStrPreferences(getActivity(),"codeTag");
+        AppInfo.codeStartday    = Util.getStrPreferences(getActivity(),"codeStartDay");
+        AppInfo.codeMinimumday    = Util.getStrPreferences(getActivity(),"codeMinimumDay");
+        AppInfo.codeMainjob     = Util.getStrPreferences(getActivity(),"codeMainJob");
+        AppInfo.codeOptionTag         = Util.getStrPreferences(getActivity(),"codeOptionTag");
 
         AppInfo.namePref        = Util.getStrPreferences(getActivity(),"namePref");
-        AppInfo.nameStartday    = Util.getStrPreferences(getActivity(),"nameStartday");
-        AppInfo.nameMinimumday    = Util.getStrPreferences(getActivity(),"nameMinimumday");
-        AppInfo.nameMainjob     = Util.getStrPreferences(getActivity(),"nameMainjob");
-        AppInfo.nameTag         = Util.getStrPreferences(getActivity(),"nameTag");
+        AppInfo.nameStartday    = Util.getStrPreferences(getActivity(),"nameStartDay");
+        AppInfo.nameMinimumday    = Util.getStrPreferences(getActivity(),"nameMinimumDay");
+        AppInfo.nameMainjob     = Util.getStrPreferences(getActivity(),"nameMainJob");
+        AppInfo.nameOptionTag         = Util.getStrPreferences(getActivity(),"nameOptionTag");
 
         HashMap<String,String> tmpMap = new HashMap<String,String>();
         if(AppInfo.namePref  != null){
@@ -125,8 +125,8 @@ public class TopFragment extends ListFragment {
         items.add(tmpMap);
 
         tmpMap = new HashMap<String,String>();
-        if(AppInfo.nameTag != null){
-            tmpMap.put("Name", AppInfo.nameTag);
+        if(AppInfo.nameOptionTag != null){
+            tmpMap.put("Name", AppInfo.nameOptionTag);
         }else{
             tmpMap.put("Name", "選択されていません");
         }

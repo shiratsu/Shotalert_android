@@ -6,16 +6,22 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_weight="1.5"
-        android:gravity="center"
-        android:text="title"/>
+        android:gravity="fill_horizontal|left|fill_vertical"
+        android:text="title"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:minWidth="90dp"
+        android:maxWidth="90dp"
+        android:nestedScrollingEnabled="true" />
     <TextView
         android:id="@+id/content"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:paddingLeft="16dp"
-        android:layout_weight="4"
-        android:gravity="center_vertical"
-        android:text="content"/>
+        android:layout_weight="1"
+        android:text="content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="fill_horizontal|left|fill_vertical" />
 
 </LinearLayout>

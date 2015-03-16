@@ -39,7 +39,7 @@ public class OptionTagFragment extends ListFragment {
 
     private OnFragmentInteractionListener mListener;
 
-    private static final String TAG = "MinimumDayFragment";
+    private static final String TAG = "OptionTagFragment";
 
 
 

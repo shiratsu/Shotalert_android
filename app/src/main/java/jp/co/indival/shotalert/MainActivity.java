@@ -15,9 +15,13 @@ import jp.co.indival.shotalert.common.Util;
 import jp.co.indival.shotalert.fragment.AreaFragment;
 import jp.co.indival.shotalert.fragment.MainJobFragment;
 import jp.co.indival.shotalert.fragment.MinimumDayFragment;
+import jp.co.indival.shotalert.fragment.OptionTagFragment;
 import jp.co.indival.shotalert.fragment.StartDayFragment;
 import jp.co.indival.shotalert.fragment.TopFragment;
 import jp.co.indival.shotalert.model.Area;
+import jp.co.indival.shotalert.model.MainJob;
+import jp.co.indival.shotalert.model.MinimumDay;
+import jp.co.indival.shotalert.model.OptionTag;
 import jp.co.indival.shotalert.model.StartDay;
 
 
@@ -26,7 +30,8 @@ public class MainActivity extends ActionBarActivity
                    ,AreaFragment.OnAreaInteractionListner
                     ,StartDayFragment.OnFragmentInteractionListener
                     ,MinimumDayFragment.OnFragmentInteractionListener
-                    ,MainJobFragment.OnFragmentInteractionListener{
+                    ,MainJobFragment.OnFragmentInteractionListener
+                    ,OptionTagFragment.OnFragmentInteractionListener{
 
 
     public static final String TAG = MainActivity.class.getName();
@@ -71,25 +76,30 @@ public class MainActivity extends ActionBarActivity
         Fragment newFragment = null;
         FragmentTransaction ft = null;
         switch (position){
-            case 0:
+            case AppInfo.MODE_PREF:
 
                 // フラグメントのインスタンスを生成する。
                 newFragment = AreaFragment.newInstance();
                 break;
-            case 1:
+            case AppInfo.MODE_START_DAY:
 
                 // フラグメントのインスタンスを生成する。
                 newFragment = StartDayFragment.newInstance();
                 break;
-            case 2:
+            case AppInfo.MODE_MINIMUM_DAY:
 
                 // フラグメントのインスタンスを生成する。
                 newFragment = MinimumDayFragment.newInstance();
                 break;
-            case 3:
+            case AppInfo.MODE_MAIN_JOB:
 
                 // フラグメントのインスタンスを生成する。
                 newFragment = MainJobFragment.newInstance();
+                break;
+            case AppInfo.MODE_TAG:
+
+                // フラグメントのインスタンスを生成する。
+                newFragment = OptionTagFragment.newInstance();
                 break;
 
         }
@@ -111,10 +121,10 @@ public class MainActivity extends ActionBarActivity
         String AreaName = area.getAreaName();
         String AreaCode = area.getPrefCode();
 
-        Util.saveStrPreferences("PrefName",PrefName,this);
-        Util.saveStrPreferences("PrefCode",PrefCode,this);
-        Util.saveStrPreferences("AreaName",AreaName,this);
-        Util.saveStrPreferences("AreaCode",AreaCode,this);
+        Util.saveStrPreferences("namePref",PrefName,this);
+        Util.saveStrPreferences("codePref",PrefCode,this);
+        Util.saveStrPreferences("nameArea",AreaName,this);
+        Util.saveStrPreferences("codeArea",AreaCode,this);
 
         goToTopFragment();
 
@@ -154,12 +164,16 @@ public class MainActivity extends ActionBarActivity
                 code = ((StartDay) obj).getCode();
                 break;
             case AppInfo.MODE_MINIMUM_DAY:
-                name = ((StartDay) obj).getName();
-                code = ((StartDay) obj).getCode();
+                name = ((MinimumDay) obj).getName();
+                code = ((MinimumDay) obj).getCode();
                 break;
             case AppInfo.MODE_MAIN_JOB:
-                name = ((StartDay) obj).getName();
-                code = ((StartDay) obj).getCode();
+                name = ((MainJob) obj).getName();
+                code = ((MainJob) obj).getCode();
+                break;
+            case AppInfo.MODE_TAG:
+                name = ((OptionTag) obj).getName();
+                code = ((OptionTag) obj).getCode();
                 break;
 
         }

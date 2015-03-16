@@ -11,13 +11,13 @@ public class AppInfo {
     public static String codeStartday;
     public static String codeMinimumday;
     public static String codeMainjob;
-    public static String codeTag;
+    public static String codeOptionTag;
 
     public static String namePref;
     public static String nameStartday;
     public static String nameMinimumday;
     public static String nameMainjob;
-    public static String nameTag;
+    public static String nameOptionTag;
 
 
     public final static int MODE_PREF         = 0;
