@@ -18,6 +18,7 @@ import jp.co.indival.shotalert.fragment.MinimumDayFragment;
 import jp.co.indival.shotalert.fragment.OptionTagFragment;
 import jp.co.indival.shotalert.fragment.StartDayFragment;
 import jp.co.indival.shotalert.fragment.TopFragment;
+import jp.co.indival.shotalert.fragment.WorkList;
 import jp.co.indival.shotalert.model.Area;
 import jp.co.indival.shotalert.model.MainJob;
 import jp.co.indival.shotalert.model.MinimumDay;
@@ -31,7 +32,8 @@ public class MainActivity extends ActionBarActivity
                     ,StartDayFragment.OnFragmentInteractionListener
                     ,MinimumDayFragment.OnFragmentInteractionListener
                     ,MainJobFragment.OnFragmentInteractionListener
-                    ,OptionTagFragment.OnFragmentInteractionListener{
+                    ,OptionTagFragment.OnFragmentInteractionListener
+                    , WorkList.OnWorkInteractionListener{
 
 
     public static final String TAG = MainActivity.class.getName();
@@ -59,7 +61,7 @@ public class MainActivity extends ActionBarActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -105,6 +107,21 @@ public class MainActivity extends ActionBarActivity
         }
         // ActivityにFragmentを登録する。
         ft = getSupportFragmentManager().beginTransaction();
+        // Layout位置先の指定
+        ft.replace(R.id.container, newFragment);
+        // Fragmentの変化時のアニメーションを指定
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.addToBackStack(null);
+        ft.commit();
+    }
+
+    @Override
+    public void onClickSearch() {
+        // フラグメントのインスタンスを生成する。
+        Fragment newFragment = WorkList.newInstance();
+
+        // ActivityにFragmentを登録する。
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         // Layout位置先の指定
         ft.replace(R.id.container, newFragment);
         // Fragmentの変化時のアニメーションを指定
@@ -184,6 +201,11 @@ public class MainActivity extends ActionBarActivity
         Util.saveStrPreferences("code"+key,code,this);
 
         goToTopFragment();
+
+    }
+
+    @Override
+    public void onWorkInteraction(String workid) {
 
     }
 }

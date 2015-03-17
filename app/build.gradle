@@ -24,4 +24,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'io.realm:realm-android:0.79.0'
     compile project(':libraries:volley')
+    compile project(':libraries:pulltorefresh-and-loadmore')
 }

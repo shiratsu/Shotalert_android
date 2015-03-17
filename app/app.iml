@@ -89,6 +89,8 @@
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="realm-android-0.79.0" level="project" />
+    <orderEntry type="module" module-name="volley" exported="" />
+    <orderEntry type="module" module-name="pulltorefresh-and-loadmore" exported="" />
   </component>
 </module>
 

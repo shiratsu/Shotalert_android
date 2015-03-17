@@ -2,8 +2,10 @@
     <string name="app_name">Shotalert</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
-<!-- TODO: Remove or change this placeholder text -->
+    <string name="close_button">閉じる</string>
+    <string name="conserv_button">条件を保存する</string>
+    <string name="search_button">検索する</string>
+<!-- TODO: Remove or changethis placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pref_text">都道府県</string>
     <string name="startday_text">勤務開始日</string>

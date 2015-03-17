@@ -8,8 +8,10 @@ import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,7 +32,7 @@ import jp.co.indival.shotalert.common.Util;
  * Use the {@link TopFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TopFragment extends ListFragment {
+public class TopFragment extends ListFragment implements OnClickListener  {
 
 
     private TopAdapter adapter;
@@ -153,6 +155,9 @@ public class TopFragment extends ListFragment {
         // Set the adapter
         condView = (AbsListView) view.findViewById(android.R.id.list);
 
+        Button searchbtn = (Button) view.findViewById(R.id.seachbutton);
+        searchbtn.setOnClickListener(this);
+
         //初期データをセットする
         _setData();
 
@@ -196,6 +201,16 @@ public class TopFragment extends ListFragment {
         }
     }
 
+    /**
+     * Called when a view has been clicked.
+     *
+     * @param v The view that was clicked.
+     */
+    @Override
+    public void onClick(View v) {
+        mListener.onClickSearch();
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this
@@ -210,6 +225,7 @@ public class TopFragment extends ListFragment {
     public interface OnMenuInteractionListener {
         // TODO: Update argument type and name
         public void onMenuItemClick(int position);
+        public void onClickSearch();
     }
 
 
