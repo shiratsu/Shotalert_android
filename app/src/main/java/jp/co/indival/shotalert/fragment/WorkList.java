@@ -1,10 +1,12 @@
 package jp.co.indival.shotalert.fragment;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +18,31 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Cache;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.costum.android.widget.PullAndLoadListView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.List;
 
 import jp.co.indival.shotalert.R;
 
-import jp.co.indival.shotalert.fragment.dummy.DummyContent;
+import jp.co.indival.shotalert.common.AppController;
+import jp.co.indival.shotalert.item.WorkItem;
 
 /**
  * A fragment representing a list of Items.
@@ -39,6 +58,10 @@ public class WorkList extends ListFragment{
 
     // list with the data to show in the listview
     private LinkedList<String> mListItems;
+
+    private List<WorkItem> dataList = new ArrayList<WorkItem>();
+
+    public static final String TAG = WorkList.class.getName();
 
     // The data to be displayed in the ListView
     private String[] mNames = { "Fabian", "Carlos", "Alex", "Andrea", "Karla",
@@ -57,6 +80,9 @@ public class WorkList extends ListFragment{
      * The fragment's ListView/GridView.
      */
     private PullAndLoadListView mListView;
+
+    private int totalCount = 0;
+    private int nowCount = 0;
 
     /**
      * The Adapter which will be used to populate the ListView/GridView with
@@ -82,6 +108,7 @@ public class WorkList extends ListFragment{
         super.onCreate(savedInstanceState);
 
 
+
     }
 
     @Override
@@ -104,6 +131,92 @@ public class WorkList extends ListFragment{
 
         return view;
     }
+
+
+    private void _loadData(String url){
+
+        String tag_json_arry = "json_array_req";
+
+        final ProgressDialog pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Loading...");
+        pDialog.show();
+
+
+
+        JsonObjectRequest req = new JsonObjectRequest(url,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d(TAG, response.toString());
+                        pDialog.hide();
+                        try {
+                            _parseJson(response);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Log.e(TAG,e.toString());
+                        }
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                pDialog.hide();
+            }
+        });
+
+// Adding request to request queue
+        AppController.getInstance().addToRequestQueue(req, tag_json_arry);
+
+    }
+
+    /**
+     * _getDataFromCafhe
+     * volleyは通信すると自動でキャッシュに入れる（入れるとことを拒否もできるが）
+     * なので、キャッシュからデータを取得
+     * @access private
+     *
+     *
+     */
+    private void _getDataByVolley(String url){
+
+        //まずはキャッシュを確認。なければ、volleyで通信
+        Cache cache = AppController.getInstance().getRequestQueue().getCache();
+        Cache.Entry entry = cache.get(url);
+        if(entry != null){
+            try {
+                String data = new String(entry.data, "UTF-8");
+                JSONObject workJson = new JSONObject(data);
+                _parseJson(workJson);
+
+                // handle data, like converting it to xml, json, bitmap etc.,
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                Log.e(TAG,e.toString());
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.e(TAG,e.toString());
+            }
+
+        }else{
+            // Cached response doesn't exists. Make network call here
+            _loadData(url);
+        }
+    }
+
+
+    /**
+     * _parseJson
+     * Jsonのパース
+     *
+     * @param workJson
+     */
+    private void _parseJson(JSONObject workJson) throws JSONException {
+        JSONObject resultSet = workJson.getJSONObject("ResultSet");
+
+    }
+
 
     @Override
     public void onAttach(Activity activity) {
